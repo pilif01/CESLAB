@@ -1,0 +1,84 @@
+public class Example {
+    public static void main(String[] args) {
+        Example example = new Example();
+        example.divisionByZero();
+        example.nullPointerIssue();
+        example.deadCodeIssue();
+    }
+
+    // Issue 1: Division by zero
+    public void divisionByZero() {
+        int x = 10;
+        int y = 0; // This will cause an ArithmeticException
+        int result = x / y;
+        System.out.println("Result: " + result);
+    }
+
+    // Issue 2: Possible null pointer dereference
+    public void nullPointerIssue() {
+        String str = null;
+        System.out.println(str.length());
+    }
+
+    // Issue 3: Dead code
+    public void deadCodeIssue() {
+        if (false) {
+            System.out.println("This code is never reached.");
+        }
+    }
+
+    // Issue 4: Unused variable
+    public void unusedVariable() {
+        int unused = 100;
+    }
+
+    // Issue 5: Empty catch block
+    public void emptyCatchBlock() {
+        try {
+            int[] arr = new int[5];
+            System.out.println(arr[10]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            // No action taken
+        }
+    }
+}
+
+/*
+A4
+Probleme legate de tratarea excepțiilor în sistemul ales:
+În cadrul codului Java prezentat, putem observa că există o problemă de tratare a excepțiilor la metoda "emptyCatchBlock". Blocul "catch" este complet gol și nu gestionează deloc excepția "ArrayIndexOutOfBoundsException" care ar putea apărea.
+
+Problema principală cu acest mod de tratare a excepțiilor este că nu oferă niciun fel de informație utilă despre eroare. Dacă excepția apare, aceasta este complet ignorată, ceea ce face codul greu de depanat și vulnerabil la erori tăcute (silent errors).
+
+
+A5
+Raport SpotBugs
+1. Division by zero (divisionByZero method) - Potențială ArithmeticException.
+2. Possible null pointer dereference (nullPointerIssue method) - Potențială NullPointerException.
+3. Dead code (deadCodeIssue method) - Cod care nu va fi niciodată executat.
+4. Unused variable (unusedVariable method) - Variabilă neutilizată.
+5. Empty catch block (emptyCatchBlock method) - Bloc catch gol, fără acțiuni implementate.
+
+Propuneri de refactorizare:
+1. Division by zero: Adăugarea unei condiții pentru a verifica dacă împărțitorul este zero înainte de efectuarea împărțirii.
+2. Null pointer dereference: Inițializarea variabilei sau verificarea dacă este null înainte de utilizare.
+3. Dead code: Înlocuirea condiției "false" cu o variabilă booleană care să fie dinamică.
+4. Unused variable: Eliminarea variabilei dacă nu este necesară sau folosirea acesteia în cadrul codului.
+5. Empty catch block: Adăugarea unui mesaj de eroare sau a unei alte acțiuni relevante în blocul "catch".
+
+
+A6 [3 puncte]
+
+Raport PMD
+1. Avoid empty catch blocks (emptyCatchBlock method) - Bloc catch gol.
+2. Avoid unused variables (unusedVariable method) - Variabilă neutilizată.
+3. Avoid division by zero (divisionByZero method) - Împărțire prin zero.
+4. Null pointer dereference (nullPointerIssue method) - Posibilă eroare de tip NullPointerException.
+5. Dead code (deadCodeIssue method) - Cod inaccesibil.
+
+Propuneri de refactorizare:
+1. Empty catch block: Adăugarea unui mesaj de eroare sau logarea excepției în jurnalul aplicației.
+2. Unused variable: Eliminarea variabilei sau utilizarea acesteia pentru o funcționalitate reală.
+3. Division by zero: Adăugarea unui "if" pentru verificarea împărțitorului înainte de împărțire.
+4. Null pointer dereference: Verificarea valorii null înainte de a folosi obiectul.
+5. Dead code: Înlocuirea condiției "false" cu o condiție dinamică verificabilă.*/
